@@ -409,8 +409,19 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-8 border-t border-glass-border pt-6 text-center text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} NeN Exams. All rights reserved.
+          <div className="mt-8 border-t border-glass-border pt-6 flex flex-col items-center gap-2 text-sm text-muted-foreground">
+            <p>
+              Built by{" "}
+              <a
+                href="https://github.com/Marsh-Edge"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary hover:underline"
+              >
+                Marsh-Edge
+              </a>
+            </p>
+            <p>&copy; {new Date().getFullYear()} NeN Exams. All rights reserved.</p>
           </div>
         </div>
       </footer>
