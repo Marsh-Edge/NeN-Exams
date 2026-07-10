@@ -63,7 +63,7 @@ export default async function DashboardPage() {
   let organizerStats = null;
   let viewerStats = null;
 
-  if (user.role === "teacher") {
+  if (user.role === "teacher" || user.role === "superuser") {
     const [myTests] = await db
       .select({ value: count() })
       .from(tests)
@@ -87,7 +87,7 @@ export default async function DashboardPage() {
     };
   }
 
-  if (user.role === "organizer") {
+  if (user.role === "organizer" || user.role === "superuser") {
     const [totalScheduled] = await db
       .select({ value: count() })
       .from(testSchedules)
@@ -106,7 +106,7 @@ export default async function DashboardPage() {
     };
   }
 
-  if (user.role === "viewer") {
+  if (user.role === "viewer" || user.role === "superuser") {
     const [totalUsers] = await db
       .select({ value: count() })
       .from(users);
@@ -160,7 +160,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {user.role === "student" && (
+        {(user.role === "student" || user.role === "superuser") && (
           <>
             <GlassCard neon>
               <p className="text-sm text-muted-foreground">Available Tests</p>
@@ -189,7 +189,7 @@ export default async function DashboardPage() {
           </>
         )}
 
-        {user.role === "teacher" && teacherStats && (
+        {(user.role === "teacher" || user.role === "superuser") && teacherStats && (
           <>
             <GlassCard neon>
               <p className="text-sm text-muted-foreground">My Tests</p>
@@ -218,7 +218,7 @@ export default async function DashboardPage() {
           </>
         )}
 
-        {user.role === "organizer" && organizerStats && (
+        {(user.role === "organizer" || user.role === "superuser") && organizerStats && (
           <>
             <GlassCard neon>
               <p className="text-sm text-muted-foreground">Scheduled Tests</p>
@@ -247,7 +247,7 @@ export default async function DashboardPage() {
           </>
         )}
 
-        {user.role === "viewer" && viewerStats && (
+        {(user.role === "viewer" || user.role === "superuser") && viewerStats && (
           <>
             <GlassCard neon>
               <p className="text-sm text-muted-foreground">Total Users</p>
@@ -277,7 +277,7 @@ export default async function DashboardPage() {
         )}
       </div>
 
-      {user.role === "teacher" && (
+      {(user.role === "teacher" || user.role === "superuser") && (
         <GlassCard>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Quick Actions</h2>
@@ -290,7 +290,7 @@ export default async function DashboardPage() {
         </GlassCard>
       )}
 
-      {user.role === "organizer" && (
+      {(user.role === "organizer" || user.role === "superuser") && (
         <GlassCard>
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Quick Actions</h2>

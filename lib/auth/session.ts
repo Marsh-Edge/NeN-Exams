@@ -76,6 +76,8 @@ export async function destroySession() {
   cookieStore.delete(SESSION_COOKIE);
 }
 
+export type Role = "student" | "teacher" | "organizer" | "viewer" | "superuser";
+
 export async function requireAuth() {
   const session = await getSession();
   if (!session) {
@@ -84,11 +86,9 @@ export async function requireAuth() {
   return session;
 }
 
-export async function requireRole(
-  role: "student" | "teacher" | "organizer" | "viewer"
-) {
+export async function requireRole(role: Role) {
   const session = await requireAuth();
-  if (session.user.role !== role) {
+  if (session.user.role !== "superuser" && session.user.role !== role) {
     throw new Error("Forbidden");
   }
   return session;

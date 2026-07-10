@@ -9,7 +9,7 @@ import { DeleteScheduleButton } from "./delete-schedule-button";
 
 export default async function SchedulePage() {
   const session = await getSession();
-  if (!session || session.user.role !== "organizer") {
+  if (!session || (session.user.role !== "organizer" && session.user.role !== "superuser")) {
     redirect("/dashboard");
   }
 

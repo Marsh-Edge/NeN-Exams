@@ -9,7 +9,7 @@ export default async function TakeTestPage({
   params: Promise<{ id: string }>;
 }) {
   const session = await getSession();
-  if (!session || session.user.role !== "student") {
+  if (!session || (session.user.role !== "student" && session.user.role !== "superuser")) {
     redirect("/dashboard");
   }
 

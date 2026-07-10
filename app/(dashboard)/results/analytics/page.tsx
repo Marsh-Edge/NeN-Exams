@@ -13,7 +13,7 @@ import { GlassCard } from "@/components/glass-card";
 
 export default async function AnalyticsPage() {
   const session = await getSession();
-  if (!session || (session.user.role !== "viewer" && session.user.role !== "teacher" && session.user.role !== "organizer")) {
+  if (!session || (session.user.role !== "viewer" && session.user.role !== "teacher" && session.user.role !== "organizer" && session.user.role !== "superuser")) {
     redirect("/dashboard");
   }
 

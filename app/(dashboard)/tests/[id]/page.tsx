@@ -46,7 +46,7 @@ export default async function TestDetailPage({
   const totalPoints = questionList.reduce((sum, q) => sum + q.points, 0);
 
   let previousAttempt = null;
-  if (session.user.role === "student") {
+  if (session.user.role === "student" || session.user.role === "superuser") {
     const attempts = await db
       .select()
       .from(testAttempts)
@@ -63,7 +63,7 @@ export default async function TestDetailPage({
   }
 
   const canTake =
-    session.user.role === "student" && test[0].isPublished;
+    (session.user.role === "student" || session.user.role === "superuser") && test[0].isPublished;
 
   return (
     <div className="space-y-6">

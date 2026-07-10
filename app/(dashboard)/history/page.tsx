@@ -12,11 +12,13 @@ export default async function HistoryPage() {
 
   const user = session.user;
   const whereClause =
-    user.role === "student"
-      ? eq(testAttempts.userId, user.id)
-      : user.role === "teacher"
-        ? eq(tests.creatorId, user.id)
-        : undefined;
+    user.role === "superuser"
+      ? undefined
+      : user.role === "student"
+        ? eq(testAttempts.userId, user.id)
+        : user.role === "teacher"
+          ? eq(tests.creatorId, user.id)
+          : undefined;
 
   const baseQuery = db
     .select({

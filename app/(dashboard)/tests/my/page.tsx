@@ -11,7 +11,7 @@ import { DeleteTestButton } from "./delete-test-button";
 
 export default async function MyTestsPage() {
   const session = await getSession();
-  if (!session || session.user.role !== "teacher") {
+  if (!session || (session.user.role !== "teacher" && session.user.role !== "superuser")) {
     return null;
   }
 
