@@ -41,18 +41,19 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-accent/20 p-4">
+    <>
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>
 
       <GlassCard className="w-full max-w-md">
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold">
-            <span className="neon-text">NeN</span> Exams
-          </h1>
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-gradient-aurora text-xl font-bold text-white shadow-aurora">
+            N
+          </div>
+          <h1 className="text-2xl font-bold">Welcome Back</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Sign in to your account
+            Sign in to continue to NeN Exams
           </p>
         </div>
 
@@ -90,24 +91,24 @@ function LoginForm() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-gradient-to-r from-primary to-[oklch(0.7_0.12_190)] text-primary-foreground shadow-[0_0_15px_var(--neon-glow)] transition-all duration-300 hover:shadow-[0_0_25px_var(--neon-glow)]"
+            className="w-full rounded-xl bg-gradient-aurora-btn text-white font-semibold shadow-aurora transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,212,170,0.4)]"
             size="lg"
           >
             {loading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
 
-        <div className="mt-4 text-center text-sm text-muted-foreground">
+        <div className="mt-6 text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
             href="/register"
-            className="font-medium text-primary hover:underline"
+            className="font-semibold text-primary hover:underline"
           >
-            Register
+            Create one
           </Link>
         </div>
       </GlassCard>
-    </div>
+    </>
   );
 }
 

@@ -143,14 +143,17 @@ export function Sidebar({ user }: SidebarProps) {
       : navItems.filter((item) => item.roles.includes(userRole));
 
   return (
-    <aside className="glass flex h-full w-64 flex-col border-r border-glass-border">
-      <div className="flex items-center gap-2 border-b border-glass-border p-4">
-        <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-[oklch(0.7_0.12_190)] text-sm font-bold text-primary-foreground">
+    <aside className="glass-strong flex h-full w-64 flex-col border-r border-glass-border">
+      <div className="flex items-center gap-3 border-b border-glass-border px-5 py-5">
+        <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-aurora text-sm font-bold text-white shadow-aurora">
           N
         </div>
-        <span className="text-lg font-semibold">
-          <span className="neon-text">NeN</span> Exams
-        </span>
+        <div>
+          <span className="text-lg font-bold">
+            <span className="text-gradient-aurora">NeN</span>{" "}
+            <span className="text-foreground">Exams</span>
+          </span>
+        </div>
       </div>
 
       <nav className="flex-1 space-y-1 p-3">
@@ -163,13 +166,22 @@ export function Sidebar({ user }: SidebarProps) {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 isActive
                   ? "bg-primary/10 text-primary neon-glow-sm"
                   : "text-muted-foreground hover:bg-accent hover:text-foreground"
               )}
             >
-              {item.icon}
+              <span
+                className={cn(
+                  "transition-colors duration-200",
+                  isActive
+                    ? "text-primary"
+                    : "text-muted-foreground group-hover:text-foreground"
+                )}
+              >
+                {item.icon}
+              </span>
               {item.label}
             </Link>
           );
@@ -177,12 +189,12 @@ export function Sidebar({ user }: SidebarProps) {
       </nav>
 
       <div className="border-t border-glass-border p-3">
-        <div className="flex items-center gap-3 rounded-xl px-3 py-2">
-          <div className="flex size-8 items-center justify-center rounded-full bg-primary/20 text-xs font-semibold text-primary">
+        <div className="flex items-center gap-3 rounded-xl px-3 py-3">
+          <div className="flex size-9 items-center justify-center rounded-full bg-gradient-aurora text-xs font-bold text-white">
             {user.displayName.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1 overflow-hidden">
-            <p className="truncate text-sm font-medium">{user.displayName}</p>
+            <p className="truncate text-sm font-semibold">{user.displayName}</p>
             <p className="truncate text-xs capitalize text-muted-foreground">
               {user.role}
             </p>

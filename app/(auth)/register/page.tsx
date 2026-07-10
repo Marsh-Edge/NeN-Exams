@@ -46,19 +46,20 @@ function RegisterForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-accent/20 p-4">
+    <>
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>
 
       <GlassCard className="w-full max-w-md">
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold">
-            <span className="neon-text">NeN</span> Exams
-          </h1>
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-gradient-aurora text-xl font-bold text-white shadow-aurora">
+            N
+          </div>
+          <h1 className="text-2xl font-bold">Create Account</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Create your account as a{" "}
-            <span className="font-medium text-primary">
+            Join as a{" "}
+            <span className="font-semibold text-primary">
               {roleLabels[initialRole] || "Student"}
             </span>
           </p>
@@ -128,7 +129,7 @@ function RegisterForm() {
               id="password"
               name="password"
               type="password"
-              placeholder="Min 8 chars, 1 uppercase, 1 lowercase, 1 number"
+              placeholder="Min 8 chars, uppercase, lowercase, number"
               required
               className="rounded-xl"
             />
@@ -140,24 +141,24 @@ function RegisterForm() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-gradient-to-r from-primary to-[oklch(0.7_0.12_190)] text-primary-foreground shadow-[0_0_15px_var(--neon-glow)] transition-all duration-300 hover:shadow-[0_0_25px_var(--neon-glow)]"
+            className="w-full rounded-xl bg-gradient-aurora-btn text-white font-semibold shadow-aurora transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,212,170,0.4)]"
             size="lg"
           >
             {loading ? "Creating account..." : "Create Account"}
           </Button>
         </form>
 
-        <div className="mt-4 text-center text-sm text-muted-foreground">
+        <div className="mt-6 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link
             href="/login"
-            className="font-medium text-primary hover:underline"
+            className="font-semibold text-primary hover:underline"
           >
             Sign in
           </Link>
         </div>
       </GlassCard>
-    </div>
+    </>
   );
 }
 

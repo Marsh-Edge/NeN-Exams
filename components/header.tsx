@@ -15,7 +15,7 @@ interface HeaderProps {
 
 export function Header({ user }: HeaderProps) {
   return (
-    <header className="glass sticky top-0 z-40 flex items-center justify-between border-b border-glass-border px-4 py-3">
+    <header className="glass-strong sticky top-0 z-40 flex items-center justify-between border-b border-glass-border px-4 py-3 sm:px-6">
       <div className="flex items-center gap-3 lg:hidden">
         <Sheet>
           <SheetTrigger
@@ -40,11 +40,11 @@ export function Header({ user }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-2 lg:hidden">
-        <div className="flex size-7 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-[oklch(0.7_0.12_190)] text-xs font-bold text-primary-foreground">
+        <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-aurora text-xs font-bold text-white">
           N
         </div>
-        <span className="font-semibold">
-          <span className="neon-text">NeN</span>
+        <span className="text-lg font-bold">
+          <span className="text-gradient-aurora">NeN</span>
         </span>
       </div>
 
@@ -56,7 +56,7 @@ export function Header({ user }: HeaderProps) {
           variant="ghost"
           size="sm"
           onClick={() => logout()}
-          className="rounded-xl text-muted-foreground"
+          className="rounded-xl text-muted-foreground hover:text-foreground"
         >
           Logout
         </Button>
