@@ -178,18 +178,18 @@ export default function Home() {
               N
             </div>
 
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl animate-slide-up">
               The Modern{" "}
               <span className="text-gradient-aurora">Online Testing</span>{" "}
               Platform
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl animate-slide-up stagger-1">
               Create, manage, and take tests with built-in anti-cheat protection,
               real-time analytics, and a beautiful glass morphism interface.
             </p>
 
-            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center animate-slide-up stagger-2">
               <Button
                 size="lg"
                 onClick={() => router.push("/register?role=student")}
@@ -213,7 +213,7 @@ export default function Home() {
       {/* ──── Features ──── */}
       <section className="relative py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="text-center animate-slide-up">
             <h2 className="text-3xl font-bold sm:text-4xl">
               Everything You Need
             </h2>
@@ -223,8 +223,8 @@ export default function Home() {
           </div>
 
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature) => (
-              <GlassCard key={feature.title} className="group hover:shadow-aurora transition-all duration-300">
+            {features.map((feature, i) => (
+              <GlassCard key={feature.title} className={`group hover:shadow-aurora transition-all duration-300 animate-slide-up stagger-${i + 1}`}>
                 <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-gradient-aurora group-hover:text-white">
                   {feature.icon}
                 </div>
@@ -241,7 +241,7 @@ export default function Home() {
       {/* ──── How It Works ──── */}
       <section className="relative py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="text-center animate-slide-up">
             <h2 className="text-3xl font-bold sm:text-4xl">
               How It Works
             </h2>
@@ -251,8 +251,8 @@ export default function Home() {
           </div>
 
           <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {steps.map((step) => (
-              <div key={step.step} className="relative text-center">
+            {steps.map((step, i) => (
+              <div key={step.step} className={`relative text-center animate-slide-up stagger-${i + 1}`}>
                 <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-2xl bg-gradient-aurora/10 text-xl font-bold text-gradient-aurora">
                   {step.step}
                 </div>
@@ -269,7 +269,7 @@ export default function Home() {
       {/* ──── Roles ──── */}
       <section className="relative py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="text-center animate-slide-up">
             <h2 className="text-3xl font-bold sm:text-4xl">
               Built for Everyone
             </h2>
@@ -278,7 +278,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-16">
+          <div className="mt-16 animate-scale-in stagger-2">
             <GlassCard className="mx-auto max-w-3xl">
               <RoleSelector
                 selectedRole={selectedRole}
@@ -332,7 +332,7 @@ export default function Home() {
 
       {/* ──── CTA ──── */}
       <section className="relative py-20 sm:py-28">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 animate-slide-up">
           <GlassCard aurora className="text-center">
             <h2 className="text-3xl font-bold sm:text-4xl">
               Ready to Get Started?
@@ -362,19 +362,56 @@ export default function Home() {
       </section>
 
       {/* ──── Footer ──── */}
-      <footer className="border-t border-glass-border py-8">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2">
-            <div className="flex size-7 items-center justify-center rounded-lg bg-gradient-aurora text-xs font-bold text-white">
-              N
+      <footer className="border-t border-glass-border py-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex size-7 items-center justify-center rounded-lg bg-gradient-aurora text-xs font-bold text-white">
+                  N
+                </div>
+                <span className="text-sm font-semibold">
+                  <span className="text-gradient-aurora">NeN</span> Exams
+                </span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                The modern online testing platform with anti-cheat protection and real-time analytics.
+              </p>
             </div>
-            <span className="text-sm font-semibold">
-              <span className="text-gradient-aurora">NeN</span> Exams
-            </span>
+
+            <div>
+              <h3 className="text-sm font-semibold mb-3">Product</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#features" className="hover:text-foreground transition-colors">Features</a></li>
+                <li><a href="#how-it-works" className="hover:text-foreground transition-colors">How It Works</a></li>
+                <li><a href="#roles" className="hover:text-foreground transition-colors">Roles</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold mb-3">Get Started</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="/register?role=student" className="hover:text-foreground transition-colors">Student Sign Up</a></li>
+                <li><a href="/register?role=teacher" className="hover:text-foreground transition-colors">Teacher Sign Up</a></li>
+                <li><a href="/register?role=organizer" className="hover:text-foreground transition-colors">Organizer Sign Up</a></li>
+                <li><a href="/login" className="hover:text-foreground transition-colors">Sign In</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold mb-3">Built With</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Next.js 16</li>
+                <li>Tailwind CSS</li>
+                <li>Drizzle ORM</li>
+                <li>SQLite</li>
+              </ul>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Built with Next.js, Tailwind CSS, and Drizzle ORM.
-          </p>
+
+          <div className="mt-8 border-t border-glass-border pt-6 text-center text-sm text-muted-foreground">
+            &copy; {new Date().getFullYear()} NeN Exams. All rights reserved.
+          </div>
         </div>
       </footer>
     </div>

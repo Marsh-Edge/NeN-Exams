@@ -160,13 +160,13 @@ export function Sidebar({ user }: SidebarProps) {
         {filteredNavItems.map((item) => {
           const isActive =
             pathname === item.href ||
-            (item.href !== "/dashboard" && pathname.startsWith(item.href));
+            (item.href !== "/dashboard" && pathname.startsWith(item.href + "/"));
           return (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-300 ease-out",
                 isActive
                   ? "bg-primary/10 text-primary neon-glow-sm"
                   : "text-muted-foreground hover:bg-accent hover:text-foreground"

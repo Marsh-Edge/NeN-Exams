@@ -7,6 +7,7 @@ import { GlassCard } from "@/components/glass-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { Separator } from "@/components/ui/separator";
 import {
   Select,
@@ -307,7 +308,14 @@ export function CreateTestClient() {
             disabled={loading}
             className="rounded-xl bg-gradient-to-r from-primary to-[oklch(0.7_0.12_190)] text-primary-foreground shadow-[0_0_15px_var(--neon-glow)]"
           >
-            {loading ? "Creating..." : "Create Test"}
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <Spinner size="sm" />
+                Creating...
+              </span>
+            ) : (
+              "Create Test"
+            )}
           </Button>
         </div>
       </form>

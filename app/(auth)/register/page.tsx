@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -144,7 +145,14 @@ function RegisterForm() {
             className="w-full rounded-xl bg-gradient-aurora-btn text-white font-semibold shadow-aurora transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,212,170,0.4)]"
             size="lg"
           >
-            {loading ? "Creating account..." : "Create Account"}
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <Spinner size="sm" className="text-white" />
+                Creating account...
+              </span>
+            ) : (
+              "Create Account"
+            )}
           </Button>
         </form>
 

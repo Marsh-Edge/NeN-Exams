@@ -18,10 +18,11 @@ export function GlassCard({
   return (
     <div
       className={cn(
-        "rounded-2xl p-6 transition-all duration-300",
+        "rounded-2xl p-6 transition-all duration-300 ease-out",
         subtle ? "glass-subtle" : "glass",
         neon && "neon-glow-sm",
         aurora && "border-gradient-aurora shadow-aurora",
+        "hover:translate-y-[-2px] hover:shadow-lg",
         className
       )}
     >

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addComment, type AddCommentInput } from "./actions";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import {
   Select,
   SelectContent,
@@ -93,7 +94,14 @@ export function AddCommentForm({ publishedTests }: AddCommentFormProps) {
         disabled={loading}
         className="rounded-xl"
       >
-        {loading ? "Posting..." : "Post Comment"}
+        {loading ? (
+          <span className="flex items-center gap-2">
+            <Spinner size="sm" />
+            Posting...
+          </span>
+        ) : (
+          "Post Comment"
+        )}
       </Button>
     </form>
   );

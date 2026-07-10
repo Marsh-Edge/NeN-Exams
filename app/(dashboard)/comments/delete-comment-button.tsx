@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { deleteComment } from "./actions";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 interface DeleteCommentButtonProps {
   commentId: string;
@@ -32,7 +33,7 @@ export function DeleteCommentButton({ commentId }: DeleteCommentButtonProps) {
       disabled={loading}
       className="rounded-xl text-xs text-destructive hover:text-destructive"
     >
-      {loading ? "..." : "Delete"}
+      {loading ? <Spinner size="sm" /> : "Delete"}
     </Button>
   );
 }
