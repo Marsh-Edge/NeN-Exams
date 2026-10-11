@@ -3,7 +3,16 @@ import type { NextRequest } from "next/server";
 
 const SESSION_COOKIE = "nen-session";
 
-const protectedRoutes = ["/dashboard", "/tests", "/history", "/results", "/comments", "/upcoming"];
+const protectedRoutes = [
+  "/dashboard",
+  "/tests",
+  "/history",
+  "/results",
+  "/comments",
+  "/upcoming",
+  "/schedule",
+  "/profile",
+];
 const authRoutes = ["/login", "/register"];
 
 export function proxy(request: NextRequest) {
@@ -39,6 +48,8 @@ export const config = {
     "/results/:path*",
     "/comments/:path*",
     "/upcoming/:path*",
+    "/schedule/:path*",
+    "/profile/:path*",
     "/login",
     "/register",
   ],

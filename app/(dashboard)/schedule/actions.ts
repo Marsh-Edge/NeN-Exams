@@ -16,7 +16,10 @@ export type ScheduleTestInput = z.infer<typeof scheduleTestSchema>;
 
 export async function scheduleTest(input: ScheduleTestInput) {
   const session = await getSession();
-  if (!session || session.user.role !== "organizer") {
+  if (
+    !session ||
+    (session.user.role !== "organizer" && session.user.role !== "superuser")
+  ) {
     return { success: false, error: { _form: ["Unauthorized"] } };
   }
 
@@ -53,7 +56,10 @@ export async function scheduleTest(input: ScheduleTestInput) {
 
 export async function deleteSchedule(scheduleId: string) {
   const session = await getSession();
-  if (!session || session.user.role !== "organizer") {
+  if (
+    !session ||
+    (session.user.role !== "organizer" && session.user.role !== "superuser")
+  ) {
     return { success: false, error: { _form: ["Unauthorized"] } };
   }
 
@@ -63,7 +69,11 @@ export async function deleteSchedule(scheduleId: string) {
     .where(eq(testSchedules.id, scheduleId))
     .limit(1);
 
-  if (!schedule[0] || schedule[0].createdBy !== session.user.id) {
+  if (
+    !schedule[0] ||
+    (schedule[0].createdBy !== session.user.id &&
+      session.user.role !== "superuser")
+  ) {
     return { success: false, error: { _form: ["Schedule not found"] } };
   }
 

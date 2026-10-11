@@ -67,7 +67,7 @@ export const testAttempts = sqliteTable("test_attempts", {
   id: text("id").primaryKey(),
   testId: text("test_id")
     .notNull()
-    .references(() => tests.id),
+    .references(() => tests.id, { onDelete: "cascade" }),
   userId: text("user_id")
     .notNull()
     .references(() => users.id),
@@ -91,7 +91,7 @@ export const answers = sqliteTable("answers", {
     .references(() => testAttempts.id, { onDelete: "cascade" }),
   questionId: text("question_id")
     .notNull()
-    .references(() => questions.id),
+    .references(() => questions.id, { onDelete: "cascade" }),
   answer: text("answer").notNull(),
   isCorrect: integer("is_correct", { mode: "boolean" }),
   answeredAt: text("answered_at")

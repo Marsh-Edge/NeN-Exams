@@ -130,10 +130,6 @@ export async function submitAnswer(
     const elapsed = nowTime - startedAtTime;
     const limit = testRecord[0].timeLimitMinutes * 60 * 1000;
     if (elapsed > limit) {
-      await db
-        .update(testAttempts)
-        .set({ status: "timed_out", completedAt: now })
-        .where(eq(testAttempts.id, attemptId));
       return { success: false, error: "Time limit exceeded" };
     }
   }
@@ -189,6 +185,18 @@ export async function finishTest(attemptId: string) {
 
   const now = new Date().toISOString();
 
+  const testRecord = await db
+    .select()
+    .from(tests)
+    .where(eq(tests.id, attempt[0].testId))
+    .limit(1);
+
+  const elapsed = Date.now() - new Date(attempt[0].startedAt).getTime();
+  const limit = testRecord[0]
+    ? testRecord[0].timeLimitMinutes * 60 * 1000
+    : Infinity;
+  const timedOut = elapsed > limit;
+
   const questionList = await db
     .select()
     .from(questions)
@@ -221,7 +229,7 @@ export async function finishTest(attemptId: string) {
   await db
     .update(testAttempts)
     .set({
-      status: "completed",
+      status: timedOut ? "timed_out" : "completed",
       score,
       completedAt: now,
     })

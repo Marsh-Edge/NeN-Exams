@@ -74,7 +74,7 @@ export async function register(input: RegisterInput) {
   });
 
   await createSession(id);
-  redirect("/dashboard");
+  return { success: true };
 }
 
 export async function login(input: LoginInput) {
@@ -101,7 +101,7 @@ export async function login(input: LoginInput) {
   }
 
   await createSession(user[0].id);
-  redirect("/dashboard");
+  return { success: true };
 }
 
 export async function logout() {

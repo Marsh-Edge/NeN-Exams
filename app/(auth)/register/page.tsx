@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const roleLabels: Record<string, string> = {
   student: "Student",
@@ -19,6 +19,7 @@ const roleLabels: Record<string, string> = {
 };
 
 function RegisterForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialRole = searchParams.get("role") || "student";
   const [errors, setErrors] = useState<Record<string, string[]>>();
@@ -43,6 +44,9 @@ function RegisterForm() {
     if (!result.success) {
       setErrors(result.error as Record<string, string[]>);
       setLoading(false);
+    } else {
+      router.push("/dashboard");
+      router.refresh();
     }
   }
 

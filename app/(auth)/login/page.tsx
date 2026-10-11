@@ -11,6 +11,13 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 
+function safeRedirect(path: string | null): string {
+  if (path && path.startsWith("/") && !path.startsWith("//")) {
+    return path;
+  }
+  return "/dashboard";
+}
+
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -37,7 +44,8 @@ function LoginForm() {
       setError(firstError);
       setLoading(false);
     } else {
-      router.push(redirect || "/dashboard");
+      router.push(safeRedirect(redirect));
+      router.refresh();
     }
   }
 

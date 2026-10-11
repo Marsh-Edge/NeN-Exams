@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { db } from "@/lib/db";
 import { sessions, users } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, ne } from "drizzle-orm";
 import crypto from "crypto";
 
 const SESSION_COOKIE = "nen-session";
@@ -74,6 +74,15 @@ export async function destroySession() {
   }
 
   cookieStore.delete(SESSION_COOKIE);
+}
+
+export async function destroyOtherSessions() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE)?.value;
+
+  if (token) {
+    await db.delete(sessions).where(ne(sessions.id, token));
+  }
 }
 
 export type Role = "student" | "teacher" | "organizer" | "viewer" | "superuser";

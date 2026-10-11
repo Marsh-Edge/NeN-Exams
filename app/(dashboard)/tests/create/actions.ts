@@ -2,8 +2,15 @@
 
 import { getSession } from "@/lib/auth/session";
 import { db } from "@/lib/db";
-import { tests, questions } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import {
+  tests,
+  questions,
+  testAttempts,
+  answers,
+  comments,
+  testSchedules,
+} from "@/lib/db/schema";
+import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 
 const questionSchema = z.object({
@@ -25,7 +32,10 @@ export type CreateTestInput = z.infer<typeof createTestSchema>;
 
 export async function createTest(input: CreateTestInput) {
   const session = await getSession();
-  if (!session || session.user.role !== "teacher") {
+  if (
+    !session ||
+    (session.user.role !== "teacher" && session.user.role !== "superuser")
+  ) {
     return { success: false, error: { _form: ["Unauthorized"] } };
   }
 
@@ -69,7 +79,10 @@ export async function createTest(input: CreateTestInput) {
 
 export async function publishTest(testId: string) {
   const session = await getSession();
-  if (!session || session.user.role !== "teacher") {
+  if (
+    !session ||
+    (session.user.role !== "teacher" && session.user.role !== "superuser")
+  ) {
     return { success: false, error: { _form: ["Unauthorized"] } };
   }
 
@@ -93,7 +106,10 @@ export async function publishTest(testId: string) {
 
 export async function unpublishTest(testId: string) {
   const session = await getSession();
-  if (!session || session.user.role !== "teacher") {
+  if (
+    !session ||
+    (session.user.role !== "teacher" && session.user.role !== "superuser")
+  ) {
     return { success: false, error: { _form: ["Unauthorized"] } };
   }
 
@@ -117,7 +133,10 @@ export async function unpublishTest(testId: string) {
 
 export async function deleteTest(testId: string) {
   const session = await getSession();
-  if (!session || session.user.role !== "teacher") {
+  if (
+    !session ||
+    (session.user.role !== "teacher" && session.user.role !== "superuser")
+  ) {
     return { success: false, error: { _form: ["Unauthorized"] } };
   }
 
@@ -127,10 +146,31 @@ export async function deleteTest(testId: string) {
     .where(eq(tests.id, testId))
     .limit(1);
 
-  if (!test[0] || test[0].creatorId !== session.user.id) {
+  if (!test[0]) {
     return { success: false, error: { _form: ["Test not found"] } };
   }
 
+  if (
+    test[0].creatorId !== session.user.id &&
+    session.user.role !== "superuser"
+  ) {
+    return { success: false, error: { _form: ["Test not found"] } };
+  }
+
+  const attempts = await db
+    .select({ id: testAttempts.id })
+    .from(testAttempts)
+    .where(eq(testAttempts.testId, testId));
+
+  const attemptIds = attempts.map((a) => a.id);
+
+  if (attemptIds.length > 0) {
+    await db.delete(answers).where(inArray(answers.attemptId, attemptIds));
+  }
+  await db.delete(testAttempts).where(eq(testAttempts.testId, testId));
+  await db.delete(comments).where(eq(comments.testId, testId));
+  await db.delete(testSchedules).where(eq(testSchedules.testId, testId));
+  await db.delete(questions).where(eq(questions.testId, testId));
   await db.delete(tests).where(eq(tests.id, testId));
 
   return { success: true };

@@ -122,5 +122,9 @@ export async function changePassword(input: ChangePasswordInput) {
     })
     .where(eq(users.id, session.user.id));
 
+  // Invalidate all other sessions after a password change
+  const { destroyOtherSessions } = await import("@/lib/auth/session");
+  await destroyOtherSessions();
+
   return { success: true };
 }
