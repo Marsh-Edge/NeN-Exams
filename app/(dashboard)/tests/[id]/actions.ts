@@ -7,7 +7,7 @@ import { eq, and } from "drizzle-orm";
 
 export async function startTest(testId: string) {
   const session = await getSession();
-  if (!session || session.user.role !== "student") {
+  if (!session || (session.user.role !== "student" && session.user.role !== "superuser")) {
     return { success: false, error: "Unauthorized" };
   }
 
@@ -118,7 +118,8 @@ export async function submitAnswer(
   }
 
   const now = new Date().toISOString();
-  const startedAt = new Date(attempt[0].startedAt).getTime();
+  const startedAtTime = new Date(attempt[0].startedAt).getTime();
+  const nowTime = Date.now();
   const testRecord = await db
     .select()
     .from(tests)
@@ -126,9 +127,8 @@ export async function submitAnswer(
     .limit(1);
 
   if (testRecord[0]) {
-    const elapsed = (now as unknown as number) - startedAt;
-    const limit =
-      testRecord[0].timeLimitMinutes * 60 * 1000;
+    const elapsed = nowTime - startedAtTime;
+    const limit = testRecord[0].timeLimitMinutes * 60 * 1000;
     if (elapsed > limit) {
       await db
         .update(testAttempts)
@@ -241,6 +241,11 @@ export async function getAttemptResults(attemptId: string) {
     .limit(1);
 
   if (!attempt[0]) return null;
+
+  // Authorization: only the attempt owner (or superuser) can view results
+  if (session.user.id !== attempt[0].userId && session.user.role !== "superuser") {
+    return null;
+  }
 
   const test = await db
     .select()

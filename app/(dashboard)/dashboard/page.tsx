@@ -46,6 +46,11 @@ export default async function DashboardPage() {
     .orderBy(desc(tests.createdAt))
     .limit(5);
 
+  const [totalPublishedTests] = await db
+    .select({ value: count() })
+    .from(tests)
+    .where(eq(tests.isPublished, true));
+
   const upcomingTests = await db
     .select({
       id: testSchedules.id,
@@ -133,7 +138,7 @@ export default async function DashboardPage() {
   }
 
   const avgScore =
-    recentAttempts.filter((a) => a.score !== null).length > 0
+    recentAttempts.filter((a) => a.score !== null && a.totalPoints > 0).length > 0
       ? Math.round(
           (recentAttempts.reduce((acc, a) => {
             if (a.score !== null && a.totalPoints > 0) {
@@ -141,7 +146,7 @@ export default async function DashboardPage() {
             }
             return acc;
           }, 0) /
-            recentAttempts.filter((a) => a.score !== null).length)
+            recentAttempts.filter((a) => a.score !== null && a.totalPoints > 0).length)
         )
       : 0;
 
@@ -162,12 +167,12 @@ export default async function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {(user.role === "student" || user.role === "superuser") && (
           <>
-            <GlassCard neon>
-              <p className="text-sm text-muted-foreground">Available Tests</p>
-              <p className="mt-1 text-3xl font-bold neon-text">
-                {publishedTests.length}
-              </p>
-            </GlassCard>
+             <GlassCard neon>
+               <p className="text-sm text-muted-foreground">Available Tests</p>
+               <p className="mt-1 text-3xl font-bold neon-text">
+                 {totalPublishedTests.value}
+               </p>
+             </GlassCard>
             <GlassCard>
               <p className="text-sm text-muted-foreground">Tests Taken</p>
               <p className="mt-1 text-3xl font-bold text-primary">
@@ -232,12 +237,12 @@ export default async function DashboardPage() {
                 {organizerStats.upcoming}
               </p>
             </GlassCard>
-            <GlassCard>
-              <p className="text-sm text-muted-foreground">Available Tests</p>
-              <p className="mt-1 text-3xl font-bold text-primary">
-                {publishedTests.length}
-              </p>
-            </GlassCard>
+             <GlassCard>
+               <p className="text-sm text-muted-foreground">Available Tests</p>
+               <p className="mt-1 text-3xl font-bold text-primary">
+                 {totalPublishedTests.value}
+               </p>
+             </GlassCard>
             <GlassCard>
               <p className="text-sm text-muted-foreground">Upcoming Tests</p>
               <p className="mt-1 text-3xl font-bold text-primary">
